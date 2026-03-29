@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useMemo } from "react";
+import { cn } from "@/lib/utils";
 
 type AnimatedDotGridProps = {
   rows?: number;
@@ -30,36 +31,43 @@ export function AnimatedDotGrid({
 
   return (
     <div
-      className={`relative overflow-hidden rounded-2xl border border-cyan-500/20 bg-gradient-to-br from-cyan-950/40 to-[#030712] p-4 ${className ?? ""}`}
+      className={cn(
+        "relative flex h-full min-h-[12rem] flex-col overflow-hidden rounded-2xl border border-cyan-500/30 bg-gradient-to-br from-[#030712] to-[#030712] p-4",
+        className,
+      )}
     >
       <div
-        className="grid gap-1.5"
+        className="grid min-h-0 min-w-0 flex-1 gap-1.5"
         style={{
           gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+          gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,
         }}
       >
         {cells.map((cell, i) => (
-          <motion.span
+          <div
             key={cell.id}
-            className={
-              cell.accent === "cyan"
-                ? "h-2 w-2 rounded-sm bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.8)]"
-                : cell.accent === "red"
-                  ? "h-2 w-2 rounded-sm bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.7)]"
-                  : "h-2 w-2 rounded-sm bg-zinc-700/60"
-            }
-            initial={{ opacity: 0.35 }}
-            animate={{ opacity: [0.35, 0.95, 0.45] }}
-            transition={{
-              duration: 3 + (i % 5) * 0.2,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: (i % 17) * 0.05,
-            }}
-          />
+            className="flex min-h-0 min-w-0 items-center justify-center"
+          >
+            <motion.span
+              className={
+                cell.accent === "cyan"
+                  ? "block h-2 w-2 max-h-full max-w-full shrink-0 rounded-sm bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.8)]"
+                  : cell.accent === "red"
+                    ? "block h-2 w-2 max-h-full max-w-full shrink-0 rounded-sm bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.7)]"
+                    : "block h-2 w-2 max-h-full max-w-full shrink-0 rounded-sm bg-zinc-700/60"
+              }
+              initial={{ opacity: 0.35 }}
+              animate={{ opacity: [0.35, 0.95, 0.45] }}
+              transition={{
+                duration: 3 + (i % 5) * 0.2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: (i % 17) * 0.05,
+              }}
+            />
+          </div>
         ))}
       </div>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#030712] via-transparent to-transparent" />
     </div>
   );
 }

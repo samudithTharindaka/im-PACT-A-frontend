@@ -49,3 +49,24 @@
 .animate-live-pulse {
   animation: live-pulse 1.4s ease-in-out infinite;
 }
+
+@keyframes blob {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(24px, -36px) scale(1.08);
+  }
+  66% {
+    transform: translate(-18px, 16px) scale(0.94);
+  }
+}
+
+.animate-blob {
+  animation: blob 10s ease-in-out infinite;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}

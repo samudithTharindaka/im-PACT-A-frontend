@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ScrollText } from "lucide-react";
+import BorderGlow from "@/components/bits/BorderGlow";
 import { GlassCard } from "@/components/bits/glass-card";
 import { LivePulse } from "@/components/bits/live-pulse";
 import { MiniBarChart } from "@/components/bits/mini-bar-chart";
@@ -36,7 +37,7 @@ export function AuditConsole() {
 
         <div className="grid gap-6 lg:grid-cols-3">
           <motion.div {...cardMotion}>
-            <GlassCard glow className="h-full">
+            <GlassCard borderGlow className="h-full">
               <p className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
                 Revenue Impact Analysis
               </p>
@@ -61,7 +62,7 @@ export function AuditConsole() {
           </motion.div>
 
           <motion.div {...cardMotion} transition={{ duration: 0.45, delay: 0.05 }}>
-            <GlassCard glow className="h-full">
+            <GlassCard borderGlow className="h-full">
               <p className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
                 Time Horizons
               </p>
@@ -83,7 +84,7 @@ export function AuditConsole() {
           </motion.div>
 
           <motion.div {...cardMotion} transition={{ duration: 0.45, delay: 0.1 }}>
-            <GlassCard glow className="h-full">
+            <GlassCard borderGlow className="h-full">
               <p className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
                 Physical Risk Vector
               </p>
@@ -107,38 +108,62 @@ export function AuditConsole() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <DataTable<LedgerRow>
-            title={
-              <div className="flex items-center gap-2 text-sm font-semibold text-white">
-                <ScrollText className="h-4 w-4 text-cyan-400" />
-                TNFD Reporting Ledger
-              </div>
-            }
-            rowKey={(r) => r.id}
-            rows={ledgerRows}
-            columns={[
-              { key: "id", header: "Ledger", cell: (r) => r.id },
-              { key: "location", header: "Location", cell: (r) => r.location },
-              { key: "sector", header: "Sector / Jurisdiction", cell: (r) => r.sector },
-              {
-                key: "status",
-                header: "Data Audit Status",
-                cell: (r) =>
-                  r.status === "COMPLETE" ? (
-                    <Badge tone="success">COMPLETE</Badge>
-                  ) : (
-                    <Badge tone="danger">INCOMPLETE</Badge>
-                  ),
-              },
-              {
-                key: "complexity",
-                header: "Complexity (%)",
-                cell: (r) => (
-                  <span className="tabular-nums text-zinc-200">{r.complexity}%</span>
-                ),
-              },
+          <BorderGlow
+            className="backdrop-blur-xl"
+            borderRadius={16}
+            edgeSensitivity={24}
+            backgroundColor="rgba(3, 7, 18, 0.72)"
+            glowColor="185 68 55"
+            glowRadius={22}
+            glowIntensity={0.8}
+            coneSpread={22}
+            colors={[
+              "rgba(34, 211, 238, 0.55)",
+              "rgba(56, 189, 248, 0.35)",
+              "rgba(167, 139, 250, 0.45)",
             ]}
-          />
+            fillOpacity={0.38}
+          >
+            <DataTable<LedgerRow>
+              title={
+                <div className="flex items-center gap-2 text-sm font-semibold text-white">
+                  <ScrollText className="h-4 w-4 text-cyan-400" />
+                  TNFD Reporting Ledger
+                </div>
+              }
+              rowKey={(r) => r.id}
+              rows={ledgerRows}
+              columns={[
+                { key: "id", header: "Ledger", cell: (r) => r.id },
+                { key: "location", header: "Location", cell: (r) => r.location },
+                {
+                  key: "sector",
+                  header: "Sector / Jurisdiction",
+                  cell: (r) => r.sector,
+                },
+                {
+                  key: "status",
+                  header: "Data Audit Status",
+                  cell: (r) =>
+                    r.status === "COMPLETE" ? (
+                      <Badge tone="success">COMPLETE</Badge>
+                    ) : (
+                      <Badge tone="danger">INCOMPLETE</Badge>
+                    ),
+                },
+                {
+                  key: "complexity",
+                  header: "Complexity (%)",
+                  cell: (r) => (
+                    <span className="tabular-nums text-zinc-200">
+                      {r.complexity}%
+                    </span>
+                  ),
+                },
+              ]}
+              className="rounded-none border-0 bg-transparent shadow-none"
+            />
+          </BorderGlow>
         </motion.div>
       </div>
     </section>
