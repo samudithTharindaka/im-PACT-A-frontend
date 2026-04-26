@@ -29,7 +29,7 @@ export function AuditConsole() {
             </h2>
             <p className="mt-2 max-w-2xl text-sm text-zinc-400">
               Live synthesis of revenue exposure, horizons, and physical risk
-              vectors—ready for governance review.
+              vectors—ready for governance review .
             </p>
           </div>
           <LivePulse />
